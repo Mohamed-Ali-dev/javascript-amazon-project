@@ -1,5 +1,10 @@
 
-
+//import is used to bring in variables and functions from other files, such as products and cart, so that we can use them in this file to display the products and add them to the cart.
+//We can avoid conflicts with the same variable names by using "as" to give imported variables a different name
+// import {cart as myCart} from '../data/cart.js'
+//with moduls we don't need to worry about the order of our script tags in the HTML file, because each file is treated as a separate module, and we can import what we need from each file without worrying about the order. This is different from traditional JavaScript, where the order of script tags can affect the availability of variables and functions.
+import {cart} from '../data/cart.js';
+import {products} from '../data/products.js';
 let productsHTML = '';
 
 products.forEach((product) =>{
