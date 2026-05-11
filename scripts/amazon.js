@@ -3,7 +3,7 @@
 //We can avoid conflicts with the same variable names by using "as" to give imported variables a different name
 // import {cart as myCart} from '../data/cart.js'
 //with moduls we don't need to worry about the order of our script tags in the HTML file, because each file is treated as a separate module, and we can import what we need from each file without worrying about the order. This is different from traditional JavaScript, where the order of script tags can affect the availability of variables and functions.
-import {cart} from '../data/cart.js';
+import {cart, addToCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 let productsHTML = '';
 
@@ -67,32 +67,27 @@ document.querySelector('.js-products-grid').innerHTML = productsHTML;
 //1Check if the product is already in the cart
 //2If it is, increase the quantity by 1
 //3If it is not, add the product to the cart with a quantity of 1
+
+
+function updateCartQuantity(){
+   
+    //Update the cart quantity in the header
+    let cartQuantity = 0;
+
+    cart.forEach((cartItem) =>{
+      cartQuantity += cartItem.quantity;
+
+    });
+    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+}
+
 document.querySelectorAll('.js-add-to-cart')
 .forEach((button) =>{
     button.addEventListener('click', () =>{
         const productId = button.dataset.productId;
-        let matchingItem;
-        cart.forEach((item) =>{
-          if(productId === item.productId){
-            matchingItem = item;
-          }
-        });
-        if(matchingItem){
-          matchingItem.quantity += 1;
-        }else{
-           cart.push({
-            productId: productId,
-            quantity:1
-        });
-        }
-        //Update the cart quantity in the header
-        let cartQuantity = 0;
+   addToCart(productId);
 
-       cart.forEach((item) =>{
-          cartQuantity += item.quantity;
-
-       });
-       document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+   updateCartQuantity();
 
     })
 });
