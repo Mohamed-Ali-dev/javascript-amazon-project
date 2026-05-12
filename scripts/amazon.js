@@ -5,6 +5,7 @@
 //with moduls we don't need to worry about the order of our script tags in the HTML file, because each file is treated as a separate module, and we can import what we need from each file without worrying about the order. This is different from traditional JavaScript, where the order of script tags can affect the availability of variables and functions.
 import {cart, addToCart} from '../data/cart.js';
 import {products} from '../data/products.js';
+import { formatCurrency } from './utils/money.js';
 let productsHTML = '';
 
 products.forEach((product) =>{
@@ -28,7 +29,7 @@ products.forEach((product) =>{
           </div>
 
           <div class="product-price">
-            $${(product.priceCents / 100).toFixed(2)}
+            $${formatCurrency(product.priceCents)}
           </div>
 
           <div class="product-quantity-container">
