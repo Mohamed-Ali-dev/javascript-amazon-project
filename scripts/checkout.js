@@ -1,19 +1,20 @@
-import {cart, removeFromCart} from '../data/cart.js'; 
-import {products} from '../data/products.js';
-import {formatCurrency} from './utils/money.js';
-let cartSummaryHTML = '';
+import { cart, removeFromCart } from "../data/cart.js";
+import { products } from "../data/products.js";
+import { formatCurrency } from "./utils/money.js";
+let cartSummaryHTML = "";
 
+//Loop over the Cart items
 cart.forEach((cartItem) => {
-    const productId = cartItem.productId;
-    // find the matching product in the products array by ProductId from the cartItem
-    let matchingProduct;
-    products.forEach((product) =>{
-        if(product.id === productId){
-            matchingProduct = product;
-        }
-    });
-    cartSummaryHTML +=
-` <div class="cart-item-container">
+  const productId = cartItem.productId;
+  // find the matching product in the products array by ProductId from the cartItem
+  let matchingProduct;
+  products.forEach((product) => {
+    if (product.id === productId) {
+      matchingProduct = product;
+    }
+  });
+  //The Cart Items
+  cartSummaryHTML += ` <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
     <div class="delivery-date">
         Delivery date: Tuesday, June 21
     </div>
@@ -91,12 +92,16 @@ cart.forEach((cartItem) => {
     `;
 });
 
-document.querySelector('.js-order-summary').innerHTML = 
-cartSummaryHTML;
-document.querySelectorAll('.js-delete-link').forEach((link) => {
-link.addEventListener('click', () => {
-   const productId = link.dataset.productId;
+document.querySelector(".js-order-summary").innerHTML = cartSummaryHTML;
+//Delete button, when clicked it send the id through by dataset to the removeFromCart method to delete the item
+document.querySelectorAll(".js-delete-link").forEach((link) => {
+  link.addEventListener("click", () => {
+    const productId = link.dataset.productId;
     removeFromCart(productId);
-});
 
+    const container = document.querySelector(
+      `.js-cart-item-container-${productId}`,
+    );
+    container.remove();
+  });
 });
