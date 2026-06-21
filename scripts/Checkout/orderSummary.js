@@ -6,12 +6,7 @@ import { hello } from "https://unpkg.com/supersimpledev@1.0.1/hello.esm.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 
 import { deliveryOptions, GetDeliveryOption } from "../../data/deliveryOptions.js";
-hello();
-
-const today = dayjs();
-const deliveryDate = today.add(7, "days");
-
-console.log(deliveryDate.format("dddd,MMMM D"));
+import { renderPaymentSummary } from "./paymentSummary.js";
 
 export function renderOrderSummary() {
   let cartSummaryHTML = "";
@@ -115,6 +110,8 @@ export function renderOrderSummary() {
         `.js-cart-item-container-${productId}`,
       );
       container.remove();
+      //re run the payment summary after deleting an item from the cart to update the prices
+      renderPaymentSummary();
     });
   });
   //update the cart deliveryOption when on click
@@ -124,6 +121,7 @@ export function renderOrderSummary() {
       updateDeliveryOption(productId, deliveryOptionId);
       //re run the page after updating the data
       renderOrderSummary();
+      renderPaymentSummary();
     });
   });
 }
