@@ -1,15 +1,14 @@
-
 //import is used to bring in variables and functions from other files, such as products and cart, so that we can use them in this file to display the products and add them to the cart.
 //We can avoid conflicts with the same variable names by using "as" to give imported variables a different name
 // import {cart as myCart} from '../data/cart.js'
 //with moduls we don't need to worry about the order of our script tags in the HTML file, because each file is treated as a separate module, and we can import what we need from each file without worrying about the order. This is different from traditional JavaScript, where the order of script tags can affect the availability of variables and functions.
-import {cart, addToCart} from '../data/cart.js';
-import {products} from '../data/products.js';
-import { formatCurrency } from './utils/money.js';
-let productsHTML = '';
+import { cart, addToCart } from "../data/cart.js";
+import { products } from "../data/products.js";
+import { formatCurrency } from "./utils/money.js";
+let productsHTML = "";
 
-products.forEach((product) =>{
-    productsHTML +=  `
+products.forEach((product) => {
+  productsHTML += `
       <div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
@@ -22,14 +21,14 @@ products.forEach((product) =>{
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="images/ratings/rating-${product.rating.stars *10}.png">
+              src="${product.getStartsUrl()}">
             <div class="product-rating-count link-primary">
               ${product.rating.count}
             </div>
           </div>
 
           <div class="product-price">
-            $${formatCurrency(product.priceCents)}
+            ${product.getPrice()}
           </div>
 
           <div class="product-quantity-container">
@@ -61,7 +60,7 @@ products.forEach((product) =>{
     `;
 });
 console.log(productsHTML);
-document.querySelector('.js-products-grid').innerHTML = productsHTML;
+document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
 // Add Event Listeners to all add to cart buttons
 //steps
@@ -69,26 +68,21 @@ document.querySelector('.js-products-grid').innerHTML = productsHTML;
 //2If it is, increase the quantity by 1
 //3If it is not, add the product to the cart with a quantity of 1
 
+function updateCartQuantity() {
+  //Update the cart quantity in the header
+  let cartQuantity = 0;
 
-function updateCartQuantity(){
-   
-    //Update the cart quantity in the header
-    let cartQuantity = 0;
-
-    cart.forEach((cartItem) =>{
-      cartQuantity += cartItem.quantity;
-
-    });
-    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+  document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
 }
 
-document.querySelectorAll('.js-add-to-cart')
-.forEach((button) =>{
-    button.addEventListener('click', () =>{
-        const productId = button.dataset.productId;
-   addToCart(productId);
+document.querySelectorAll(".js-add-to-cart").forEach((button) => {
+  button.addEventListener("click", () => {
+    const productId = button.dataset.productId;
+    addToCart(productId);
 
-   updateCartQuantity();
-
-    })
+    updateCartQuantity();
+  });
 });

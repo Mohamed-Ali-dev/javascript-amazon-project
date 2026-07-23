@@ -5,7 +5,10 @@ import { formatCurrency } from "../utils/money.js";
 import { hello } from "https://unpkg.com/supersimpledev@1.0.1/hello.esm.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 
-import { deliveryOptions, GetDeliveryOption } from "../../data/deliveryOptions.js";
+import {
+  deliveryOptions,
+  GetDeliveryOption,
+} from "../../data/deliveryOptions.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
 
 export function renderOrderSummary() {
@@ -16,11 +19,11 @@ export function renderOrderSummary() {
     const productId = cartItem.productId;
     // find the matching product in the products array by ProductId from the cartItem
     let matchingProduct = GetProduct(productId);
-  
+
     const deliveryOptionId = cartItem.deliveryOptionId;
 
     let deliveryOption = GetDeliveryOption(deliveryOptionId);
-  
+
     const today = dayjs();
     const deliveryDate = today.add(deliveryOption.deliveryDays, "days");
     const dateString = deliveryDate.format("dddd, MMMM D");
@@ -40,7 +43,7 @@ export function renderOrderSummary() {
               ${matchingProduct.name}
             </div>
             <div class="product-price">
-                $${formatCurrency(matchingProduct.priceCents)}
+              ${matchingProduct.getPrice()}
             </div>
             <div class="product-quantity js-product-quantity-${matchingProduct.id}">
                 <span>
