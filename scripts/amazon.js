@@ -46,6 +46,8 @@ products.forEach((product) => {
             </select>
           </div>
 
+          ${product.extraInfoHTML()}
+
           <div class="product-spacer"></div>
 
           <div class="added-to-cart">
@@ -59,7 +61,6 @@ products.forEach((product) => {
         </div>
     `;
 });
-console.log(productsHTML);
 document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
 // Add Event Listeners to all add to cart buttons
