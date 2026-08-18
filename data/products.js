@@ -47,6 +47,47 @@ class Clothing extends Product {
     `;
   }
 }
+/*
+Date class
+const date = new Date();
+console.log(date);
+console.log(date.toLocaleDateString());
+*/
+/*
+const object2 ={
+a:1,
+b : this.a
+}
+*/
+/*
+this
+
+//This here is undefined, inside a function this refers to the object that is calling the function, in this case it is the window object
+function logThis(){
+  console.log(this);
+}
+logThis();
+//calls the function and pass params first parameter is the value of this 
+logThis.call('hello');
+//Arrow functions do not have their own this value, they use the this value of the enclosing lexical context
+//It does not override the this value
+
+const object3 = {
+  a: 1,
+  method:() =>{
+    console.log(this);
+  }
+};
+object3.method();
+const object4 = {
+  a: 1,
+  method: function() {
+    console.log(this);
+  }
+};
+
+object4.method(); // this === object4
+*/
 
 //transform each item in the array to class instance
 export const products = [
